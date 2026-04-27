@@ -27,18 +27,14 @@ private struct DownloadCTA: View {
     let start: () -> Void
 
     var body: some View {
-        VStack(spacing: 14) {
-            ModelSourceCard()
-
-            Button(action: start) {
-                Label("Download model", systemImage: "arrow.down.circle.fill")
-                    .frame(minWidth: 220)
-                    .padding(.vertical, 4)
-            }
-            .controlSize(.large)
-            .buttonStyle(.glassProminent)
-            .keyboardShortcut(.defaultAction)
+        Button(action: start) {
+            Label("Download model", systemImage: "arrow.down.circle.fill")
+                .frame(minWidth: 220)
+                .padding(.vertical, 4)
         }
+        .controlSize(.large)
+        .buttonStyle(.glassProminent)
+        .keyboardShortcut(.defaultAction)
     }
 }
 
