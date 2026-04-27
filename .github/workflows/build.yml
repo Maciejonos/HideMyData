@@ -1,0 +1,60 @@
+name: Build
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-26
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - run: brew install swiftlint create-dmg xcbeautify
+
+      - name: Lint
+        run: swiftlint --strict
+
+      - name: Build (Release)
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project HideMyData.xcodeproj \
+            -scheme HideMyData \
+            -configuration Release \
+            -destination 'generic/platform=macOS' \
+            -derivedDataPath build \
+            clean build \
+            2>&1 | tee build.log | xcbeautify --quiet
+          if grep ": warning:" build.log | grep -v "/build/"; then
+            echo "Warnings in project source"
+            exit 1
+          fi
+
+      - name: Verify codesign
+        run: codesign --verify --deep --strict --verbose=2 build/Build/Products/Release/HideMyData.app
+
+      - name: Package DMG
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          create-dmg \
+            --volname "HideMyData" \
+            --window-size 540 380 \
+            --icon-size 120 \
+            --icon "HideMyData.app" 140 200 \
+            --app-drop-link 400 200 \
+            --hide-extension "HideMyData.app" \
+            --no-internet-enable \
+            "HideMyData-${VERSION}.dmg" \
+            "build/Build/Products/Release/HideMyData.app"
+
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: HideMyData-*.dmg
+          generate_release_notes: true

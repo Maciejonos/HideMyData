@@ -1,0 +1,32 @@
+excluded:
+  - build
+  - tests
+  - .build
+
+disabled_rules:
+  - identifier_name
+  - todo
+  - cyclomatic_complexity
+  - file_length
+  - type_body_length
+  - function_body_length
+
+line_length:
+  warning: 140
+  error: 200
+  ignores_comments: true
+  ignores_urls: true
+
+opt_in_rules:
+  - empty_count
+  - closure_spacing
+  - first_where
+  - last_where
+  - sorted_first_last
+  - contains_over_filter_count
+  - contains_over_first_not_nil
+  - redundant_nil_coalescing
+  - explicit_init
+  - prefer_zero_over_explicit_init
+  - force_unwrapping
+  - implicitly_unwrapped_optional

@@ -1,0 +1,70 @@
+{
+  "patterns": [
+    {
+      "id": "email",
+      "description": "Email address",
+      "category": "private_email",
+      "regex": "\\b[A-Za-z0-9._%+\\-]+@[A-Za-z0-9.\\-]+\\.[A-Za-z]{2,}\\b"
+    },
+    {
+      "id": "phone_international",
+      "description": "International phone number with + prefix",
+      "category": "private_phone",
+      "regex": "\\+(?:[0-9][\\s\\-.()]*){7,15}"
+    },
+    {
+      "id": "iban",
+      "description": "IBAN (International Bank Account, e.g. PL61 1090 1014 ...)",
+      "category": "account_number",
+      "regex": "\\b[A-Z]{2}\\d{2}(?:\\s?[A-Z0-9]){10,30}\\b"
+    },
+    {
+      "id": "credit_card_16",
+      "description": "16-digit credit card (Visa / MC / Discover / JCB), with optional separators",
+      "category": "account_number",
+      "regex": "\\b\\d{4}[\\s\\-]?\\d{4}[\\s\\-]?\\d{4}[\\s\\-]?\\d{4}\\b"
+    },
+    {
+      "id": "credit_card_amex",
+      "description": "American Express 15-digit credit card",
+      "category": "account_number",
+      "regex": "\\b3[47]\\d{2}[\\s\\-]?\\d{6}[\\s\\-]?\\d{5}\\b"
+    },
+    {
+      "id": "ipv4",
+      "description": "IPv4 address (octet-bounded)",
+      "category": "secret",
+      "regex": "\\b(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)(?:\\.(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)){3}\\b"
+    },
+    {
+      "id": "mrz",
+      "description": "Passport machine-readable zone (15+ uppercase / digit / < chars)",
+      "category": "secret",
+      "regex": "\\b[A-Z0-9<]{15,}\\b"
+    },
+    {
+      "id": "polish_zip",
+      "description": "Polish postal code (NN-NNN)",
+      "category": "private_address",
+      "regex": "\\b\\d{2}-\\d{3}\\b"
+    },
+    {
+      "id": "polish_nrb",
+      "description": "Polish bank account (NRB, 26 digits in 2-4-4-4-4-4-4 grouping with separators)",
+      "category": "account_number",
+      "regex": "\\b\\d{2}(?:[\\s\\-]\\d{4}){6}\\b"
+    },
+    {
+      "id": "polish_street",
+      "description": "Polish street address with ul./al./pl./os. prefix, optional honorific (Ks./Św.), and house/apartment number",
+      "category": "private_address",
+      "regex": "\\b(?:ul|al|pl|os)\\.\\s+[^\\d]{1,80}\\d+[A-Za-z]?(?:\\s*/\\s*\\d+)?(?:\\s+m\\s*\\.?\\s*\\d+)?"
+    },
+    {
+      "id": "polish_id_card",
+      "description": "Polish ID card serial (3 uppercase letters + 6 digits, with optional 'nr' infix)",
+      "category": "secret",
+      "regex": "\\b[A-Z]{3}\\s+(?:nr\\s+)?\\d{6}\\b"
+    }
+  ]
+}
