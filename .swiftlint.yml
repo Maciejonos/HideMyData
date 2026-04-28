@@ -12,8 +12,8 @@ disabled_rules:
   - function_body_length
 
 line_length:
-  warning: 140
-  error: 200
+  warning: 180
+  error: 280
   ignores_comments: true
   ignores_urls: true
 
@@ -28,5 +28,4 @@ opt_in_rules:
   - redundant_nil_coalescing
   - explicit_init
   - prefer_zero_over_explicit_init
-  - force_unwrapping
   - implicitly_unwrapped_optional

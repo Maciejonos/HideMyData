@@ -16,7 +16,11 @@ struct FirstRunView: View {
                     .font(.system(size: 32, weight: .bold))
                     .tracking(-0.6)
 
-                Text("HideMyData uses a small on‑device language model to find personal information in your documents. The model is downloaded once from Hugging Face and runs entirely on your Mac from then on — nothing is uploaded to the cloud. OCR for images uses Apple Vision, which is already on your device.")
+                Text("""
+                HideMyData uses a small on‑device language model to find personal information in your documents. \
+                The model is downloaded once from Hugging Face and runs entirely on your Mac from then on — \
+                nothing is uploaded to the cloud. OCR for images uses Apple Vision, which is already on your device.
+                """)
                     .font(.system(size: 14))
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
