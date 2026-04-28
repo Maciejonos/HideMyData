@@ -18,11 +18,11 @@ Built with [OpenMed](https://github.com/maziyarpanahi/openmed), [MLX-Swift](http
 > xattr -rd com.apple.quarantine /Applications/HideMyData.app
 > ```
 
-<!--  -->
-
 ## Install
 
 Grab the latest `.dmg` from the [Releases](../../releases) page, or build from source - see [Build](#build) below.
+
+https://github.com/user-attachments/assets/57206914-ab93-4029-8fcf-f388f30bd132
 
 ## Features
 
