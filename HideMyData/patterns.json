@@ -50,9 +50,9 @@
     },
     {
       "id": "polish_nrb",
-      "description": "Polish bank account (NRB, 26 digits in 2-4-4-4-4-4-4 grouping with separators)",
+      "description": "Polish bank account (NRB, 26 digits, optionally grouped 2-4-4-4-4-4-4 with spaces or dashes)",
       "category": "account_number",
-      "regex": "\\b\\d{2}(?:[\\s\\-]\\d{4}){6}\\b"
+      "regex": "\\b\\d{2}(?:[\\s\\-]?\\d{4}){6}\\b"
     },
     {
       "id": "polish_street",
@@ -65,6 +65,144 @@
       "description": "Polish ID card serial (3 uppercase letters + 6 digits, with optional 'nr' infix)",
       "category": "secret",
       "regex": "\\b[A-Z]{3}\\s+(?:nr\\s+)?\\d{6}\\b"
+    },
+    {
+      "id": "polish_nip",
+      "description": "Polish tax ID (NIP) — 10 digits with optional space/dash separators, anchored on 'NIP' label",
+      "category": "secret",
+      "regex": "(?i)\\bNIP[:.\\s\\-]+(?:\\d[\\s\\-]?){9}\\d\\b"
+    },
+    {
+      "id": "polish_krs",
+      "description": "Polish court register number (KRS) — 10 digits, anchored on 'KRS' label",
+      "category": "secret",
+      "regex": "(?i)\\bKRS[:.\\s\\-]+\\d{10}\\b"
+    },
+    {
+      "id": "polish_pesel",
+      "description": "Polish national ID (PESEL) — 11 digits, anchored on 'PESEL' label",
+      "category": "secret",
+      "regex": "(?i)\\bPESEL[:.\\s\\-]+\\d{11}\\b"
+    },
+    {
+      "id": "us_ssn",
+      "description": "US Social Security Number (XXX-XX-XXXX with dashes)",
+      "category": "secret",
+      "regex": "\\b\\d{3}-\\d{2}-\\d{4}\\b"
+    },
+    {
+      "id": "mac_address",
+      "description": "MAC address (6 hex pairs separated by ':' or '-')",
+      "category": "secret",
+      "regex": "\\b(?:[0-9A-Fa-f]{2}[:\\-]){5}[0-9A-Fa-f]{2}\\b"
+    },
+    {
+      "id": "ipv6",
+      "description": "IPv6 address (uncompressed and partial-compressed forms)",
+      "category": "secret",
+      "regex": "\\b(?:[A-Fa-f0-9]{1,4}:){2,7}[A-Fa-f0-9]{1,4}\\b"
+    },
+    {
+      "id": "uk_nino",
+      "description": "UK National Insurance Number (e.g. AB 12 34 56 C)",
+      "category": "secret",
+      "regex": "\\b[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z]\\s?\\d{2}\\s?\\d{2}\\s?\\d{2}\\s?[A-D]\\b"
+    },
+    {
+      "id": "jwt",
+      "description": "JSON Web Token (eyJ-prefixed, three base64url segments)",
+      "category": "secret",
+      "regex": "\\beyJ[\\w\\-]+\\.[\\w\\-]+\\.[\\w\\-]+\\b"
+    },
+    {
+      "id": "aws_access_key",
+      "description": "AWS access key ID (AKIA prefix, 20 chars total)",
+      "category": "secret",
+      "regex": "\\bAKIA[0-9A-Z]{16}\\b"
+    },
+    {
+      "id": "github_token",
+      "description": "GitHub personal/OAuth/server/user token (ghp_/gho_/ghs_/ghu_)",
+      "category": "secret",
+      "regex": "\\bgh[opsu]_[A-Za-z0-9]{36,}\\b"
+    },
+    {
+      "id": "stripe_live_key",
+      "description": "Stripe live secret key (sk_live_*)",
+      "category": "secret",
+      "regex": "\\bsk_live_[A-Za-z0-9]{20,}\\b"
+    },
+    {
+      "id": "crypto_eth",
+      "description": "Ethereum / EVM address (0x + 40 hex)",
+      "category": "account_number",
+      "regex": "\\b0x[a-fA-F0-9]{40}\\b"
+    },
+    {
+      "id": "crypto_btc",
+      "description": "Bitcoin address (legacy P2PKH/P2SH or bech32 bc1)",
+      "category": "account_number",
+      "regex": "\\b(?:bc1[qpzry9x8gf2tvdw0s3jn54khce6mua7l]{39,59}|[13][a-km-zA-HJ-NP-Z1-9]{25,34})\\b"
+    },
+    {
+      "id": "crypto_dash",
+      "description": "Dash address (X-prefixed, 34 chars base58)",
+      "category": "account_number",
+      "regex": "\\bX[1-9A-HJ-NP-Za-km-z]{33}\\b"
+    },
+    {
+      "id": "crypto_xmr",
+      "description": "Monero address (4/8-prefixed, 95 chars base58)",
+      "category": "account_number",
+      "regex": "\\b[48][1-9A-HJ-NP-Za-km-z]{94}\\b"
+    },
+    {
+      "id": "crypto_xrp",
+      "description": "Ripple/XRP address (r-prefixed, 25-35 chars)",
+      "category": "account_number",
+      "regex": "\\br[0-9a-zA-Z]{24,34}\\b"
+    },
+    {
+      "id": "crypto_ltc",
+      "description": "Litecoin address (legacy L/M or bech32 ltc1)",
+      "category": "account_number",
+      "regex": "\\b(?:ltc1[qpzry9x8gf2tvdw0s3jn54khce6mua7l]{39,59}|[LM][a-km-zA-HJ-NP-Z1-9]{26,34})\\b"
+    },
+    {
+      "id": "crypto_bch",
+      "description": "Bitcoin Cash address (bitcoincash: prefix)",
+      "category": "account_number",
+      "regex": "\\bbitcoincash:q[a-z0-9]{41}\\b"
+    },
+    {
+      "id": "crypto_doge",
+      "description": "Dogecoin address (D-prefixed, 34 chars base58)",
+      "category": "account_number",
+      "regex": "\\bD[5-9A-HJ-NP-U][1-9A-HJ-NP-Za-km-z]{32}\\b"
+    },
+    {
+      "id": "crypto_trx",
+      "description": "Tron address (T-prefixed, 34 chars base58)",
+      "category": "account_number",
+      "regex": "\\bT[1-9A-HJ-NP-Za-km-z]{33}\\b"
+    },
+    {
+      "id": "crypto_ada",
+      "description": "Cardano address (addr1/stake1/Ae2/DdzFF)",
+      "category": "account_number",
+      "regex": "\\b(?:addr1[a-z0-9]{53,}|stake1[a-z0-9]{50,}|Ae2[1-9A-HJ-NP-Za-km-z]{50,}|DdzFF[1-9A-HJ-NP-Za-km-z]{50,})\\b"
+    },
+    {
+      "id": "crypto_ton",
+      "description": "TON address (raw 0:hex64 or user-friendly EQ/UQ base64url)",
+      "category": "account_number",
+      "regex": "\\b(?:0:[a-f0-9]{64}|[EU]Q[a-zA-Z0-9_\\-]{46})\\b"
+    },
+    {
+      "id": "crypto_labeled",
+      "description": "Crypto address fallback — anchored on a ticker label (catches USDC/USDT/BNB/SOL where we have no specific regex)",
+      "category": "account_number",
+      "regex": "(?i)(?:Digital\\s+Currency\\s+Address:?\\s*)?\\b(?:ETH|BTC|XBT|BNB|USDT|USDC|TRX|SOL|XRP|LTC|DASH|XMR|BCH|DOGE|ADA|TON)[:\\s]+[A-Za-z0-9]{26,}\\b"
     }
   ]
 }

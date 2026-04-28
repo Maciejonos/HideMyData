@@ -191,7 +191,6 @@ final class PDFRedactor {
                 modelInput = pageText
                 offsetMap = []
             }
-
             let result = await detector.detect(modelInput)
             if Task.isCancelled { return }
             switch result {
@@ -200,6 +199,7 @@ final class PDFRedactor {
                 return
             case .success(let spans):
                 totalSpans += spans.count
+                var unmapped: [DetectedSpan] = []
                 for span in spans {
                     let (s, e) = OCRNormalizer.translateRange(
                         start: span.start, end: span.end, map: offsetMap, originalCount: source.text.count
@@ -209,7 +209,18 @@ final class PDFRedactor {
                         start: s, end: e, confidence: span.confidence
                     )
                     let rects = boundingRects(for: translated, source: source, on: page)
-                    for rect in rects {
+                    if rects.isEmpty {
+                        unmapped.append(translated)
+                    } else {
+                        for rect in rects {
+                            addRedaction(rect: rect, on: page, source: .auto)
+                            totalRects += 1
+                        }
+                    }
+                }
+                if !unmapped.isEmpty, case .nativeText = source {
+                    let recovered = await rectsViaOCRFallback(for: unmapped, on: page)
+                    for (rect, _) in recovered {
                         addRedaction(rect: rect, on: page, source: .auto)
                         totalRects += 1
                     }
@@ -392,6 +403,30 @@ final class PDFRedactor {
             rects.append(contentsOf: perLineRects(of: selection, on: page))
         }
         return rects
+    }
+
+    private func rectsViaOCRFallback(for spans: [DetectedSpan], on page: PDFPage) async -> [(CGRect, DetectedSpan)] {
+        guard let ocrPage = await ocrText(for: page), !ocrPage.combinedText.isEmpty else { return [] }
+        let pageBounds = page.bounds(for: .mediaBox)
+        let text = ocrPage.combinedText
+        var results: [(CGRect, DetectedSpan)] = []
+        for span in spans where !span.text.isEmpty {
+            var searchStart = text.startIndex
+            while let r = text.range(of: span.text, options: [.caseInsensitive], range: searchStart..<text.endIndex) {
+                let s = text.distance(from: text.startIndex, to: r.lowerBound)
+                let e = text.distance(from: text.startIndex, to: r.upperBound)
+                for norm in ocrPage.normalizedBoxes(start: s, end: e) {
+                    results.append((CGRect(
+                        x: norm.minX * pageBounds.width,
+                        y: norm.minY * pageBounds.height,
+                        width: norm.width * pageBounds.width,
+                        height: norm.height * pageBounds.height
+                    ), span))
+                }
+                searchStart = r.upperBound
+            }
+        }
+        return results
     }
 
     // MARK: - Blurred page snapshot (for editor preview)
