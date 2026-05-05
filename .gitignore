@@ -62,5 +62,16 @@ fastlane/screenshots/**/*.png
 fastlane/test_output
 
 build/
+dist/
 *.dmg
 tests/
+
+# Release secrets + private release tooling
+.env.release
+scripts/
+
+# macOS
+.DS_Store
+
+# Xcode "Distribute → Export" timestamped output folders
+HideMyData [0-9][0-9][0-9][0-9]-*/
