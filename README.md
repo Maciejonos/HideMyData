@@ -16,7 +16,7 @@ Built with [OpenMed](https://github.com/maziyarpanahi/openmed), [MLX-Swift](http
 
 Grab the latest `.dmg` from the [Releases](../../releases) page, or build from source - see [Build](#build) below.
 
-https://github.com/user-attachments/assets/57206914-ab93-4029-8fcf-f388f30bd132
+https://github.com/user-attachments/assets/353899ca-3810-4fbc-9cbf-45bdf50ec30d
 
 ## Features
 
