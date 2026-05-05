@@ -137,12 +137,14 @@ final class PDFRedactor {
     func save() {
         guard document != nil else { return }
         let panel = NSSavePanel()
+        let exportAccessory = ExportOptionsAccessoryView()
         panel.allowedContentTypes = [.pdf]
         panel.canCreateDirectories = true
         panel.nameFieldStringValue = suggestedSaveName()
+        panel.accessoryView = exportAccessory
         guard panel.runModal() == .OK, let url = panel.url else { return }
 
-        if let outURL = saveSecurely(to: url) {
+        if let outURL = saveSecurely(to: url, options: exportAccessory.options) {
             phase = .saved(outURL)
         } else {
             phase = .failed("Could not write redacted PDF")
@@ -479,9 +481,10 @@ final class PDFRedactor {
 
     // MARK: - True (rasterized) save
 
-    private func saveSecurely(to url: URL) -> URL? {
+    private func saveSecurely(to url: URL, options: ExportOptions) -> URL? {
         guard let doc = document else { return nil }
         let newDoc = PDFDocument()
+        newDoc.documentAttributes = options.removeMetadata ? [:] : doc.documentAttributes
 
         for pageIndex in 0..<doc.pageCount {
             guard let page = doc.page(at: pageIndex) else { continue }
@@ -489,7 +492,7 @@ final class PDFRedactor {
                 .filter { $0.page === page }
                 .map { $0.annotation.bounds }
 
-            if rectsForPage.isEmpty {
+            if rectsForPage.isEmpty && !options.removeMetadata {
                 if let copy = page.copy() as? PDFPage {
                     newDoc.insert(copy, at: newDoc.pageCount)
                 }

@@ -26,6 +26,7 @@ final class ImageRedactor {
     var redactionStyle: RedactionStyle = .blackRectangle
     var editingMode: EditingMode = .view
 
+    private var sourceImageProperties: [CFString: Any]?
     private var detectionTask: Task<Void, Never>?
 
     var statusText: String {
@@ -70,7 +71,8 @@ final class ImageRedactor {
             return false
         }
         let utiString = CGImageSourceGetType(src) as String? ?? ""
-        ingest(cg: cg, sourceURL: url, uti: UTType(utiString) ?? .png)
+        let properties = CGImageSourceCopyPropertiesAtIndex(src, 0, nil) as? [CFString: Any]
+        ingest(cg: cg, sourceURL: url, uti: UTType(utiString) ?? .png, properties: properties)
         return true
     }
 
@@ -82,7 +84,8 @@ final class ImageRedactor {
             return false
         }
         let utiString = CGImageSourceGetType(src) as String? ?? ""
-        ingest(cg: cg, sourceURL: originalURL, uti: UTType(utiString) ?? .png)
+        let properties = CGImageSourceCopyPropertiesAtIndex(src, 0, nil) as? [CFString: Any]
+        ingest(cg: cg, sourceURL: originalURL, uti: UTType(utiString) ?? .png, properties: properties)
         return true
     }
 
@@ -98,11 +101,12 @@ final class ImageRedactor {
         return ctx.createCGImage(ci, from: ci.extent)
     }
 
-    private func ingest(cg: CGImage, sourceURL: URL, uti: UTType) {
+    private func ingest(cg: CGImage, sourceURL: URL, uti: UTType, properties: [CFString: Any]?) {
         cancelDetection()
         self.image = cg
         self.sourceURL = sourceURL
         self.sourceUTI = uti
+        self.sourceImageProperties = properties
         self.redactionRects = []
         self.phase = .loaded
     }
@@ -111,12 +115,14 @@ final class ImageRedactor {
         guard image != nil else { return }
         let outUTI = sourceUTI ?? .png
         let panel = NSSavePanel()
+        let exportAccessory = ExportOptionsAccessoryView()
         panel.allowedContentTypes = [outUTI]
         panel.canCreateDirectories = true
         panel.nameFieldStringValue = suggestedSaveName(uti: outUTI)
+        panel.accessoryView = exportAccessory
         guard panel.runModal() == .OK, let url = panel.url else { return }
 
-        if writeRedacted(to: url, uti: outUTI) {
+        if writeRedacted(to: url, uti: outUTI, options: exportAccessory.options) {
             phase = .saved(url)
         } else {
             phase = .failed("Could not write redacted image")
@@ -210,14 +216,31 @@ final class ImageRedactor {
         return CGRect(x: x, y: y, width: norm.width * w, height: norm.height * h)
     }
 
-    private func writeRedacted(to url: URL, uti: UTType) -> Bool {
+    private func writeRedacted(to url: URL, uti: UTType, options: ExportOptions) -> Bool {
         guard let cg = image else { return false }
         guard let baked = bakeRedactions(into: cg) else { return false }
         guard let dest = CGImageDestinationCreateWithURL(url as CFURL, uti.identifier as CFString, 1, nil) else {
             return false
         }
-        CGImageDestinationAddImage(dest, baked, nil)
+        CGImageDestinationAddImage(dest, baked, imageProperties(for: uti, options: options))
         return CGImageDestinationFinalize(dest)
+    }
+
+    private func imageProperties(for uti: UTType, options: ExportOptions) -> CFDictionary? {
+        var properties = options.removeMetadata ? [:] : sourceImageProperties ?? [:]
+        properties[kCGImagePropertyOrientation] = 1
+
+        if options.removeMetadata {
+            if uti.conforms(to: .png) {
+                properties[kCGImagePropertyPNGDictionary] = [:] as CFDictionary
+            } else if uti.conforms(to: .jpeg) {
+                properties[kCGImagePropertyJFIFDictionary] = [:] as CFDictionary
+            } else if uti.conforms(to: .tiff) {
+                properties[kCGImagePropertyTIFFDictionary] = [:] as CFDictionary
+            }
+        }
+
+        return properties as CFDictionary
     }
 
     private func bakeRedactions(into image: CGImage) -> CGImage? {

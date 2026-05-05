@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0577AA1F653021F9CC2B966E /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 63F7FE88E8ED1B5CC40576DA /* Sparkle */; };
+		0674E494C4846F884B583FE2 /* ExportOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E09D912BEB75B1C5145E3548 /* ExportOptions.swift */; };
 		1066B4CD114E05EC1ACA8166 /* BlackRedactionAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4031A729053A3FF3DDAC497 /* BlackRedactionAnnotation.swift */; };
 		1632A8901BD1E3281D4576EE /* OCREngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51501230D5992057C9F93B29 /* OCREngine.swift */; };
 		1A9AC8A4B9719BF4C6907CA8 /* InputTabSegmented.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED509B4A7F683F1ABDA9141A /* InputTabSegmented.swift */; };
@@ -79,6 +80,7 @@
 		C8A76A95C746EA3B02F41B34 /* HideMyData.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HideMyData.entitlements; sourceTree = "<group>"; };
 		DEAC294E583A1CD61B3783D7 /* ImageRedactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRedactor.swift; sourceTree = "<group>"; };
 		DFF5C57B65350D249E4DC294 /* DocumentSurface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSurface.swift; sourceTree = "<group>"; };
+		E09D912BEB75B1C5145E3548 /* ExportOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportOptions.swift; sourceTree = "<group>"; };
 		E0E665C2C50895FD2F4558F2 /* HideMyData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HideMyData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4031A729053A3FF3DDAC497 /* BlackRedactionAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackRedactionAnnotation.swift; sourceTree = "<group>"; };
 		ED509B4A7F683F1ABDA9141A /* InputTabSegmented.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTabSegmented.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				E4031A729053A3FF3DDAC497 /* BlackRedactionAnnotation.swift */,
 				C819461B0327B9629B1868A7 /* BlurRedactionAnnotation.swift */,
 				AB4E75A7141A03E35736C36D /* ContentView.swift */,
+				E09D912BEB75B1C5145E3548 /* ExportOptions.swift */,
 				C8A76A95C746EA3B02F41B34 /* HideMyData.entitlements */,
 				7FD9BFDBDCC4E109D5B64106 /* HideMyDataApp.swift */,
 				DEAC294E583A1CD61B3783D7 /* ImageRedactor.swift */,
@@ -299,6 +302,7 @@
 				FB315673A56F0632AA65524C /* DocumentSurface.swift in Sources */,
 				2B7F3622FB1689F1668387AE /* EditingMode+UI.swift in Sources */,
 				C081DB16350FBC68C5C87DCF /* EmptyState.swift in Sources */,
+				0674E494C4846F884B583FE2 /* ExportOptions.swift in Sources */,
 				548FA71F7AFA8631CDA97302 /* FirstRunPhase.swift in Sources */,
 				5663F050F48B4494484CEAD0 /* FirstRunView.swift in Sources */,
 				8C6A17560A2EB7C167A9D4A5 /* FloatingToolbar.swift in Sources */,
