@@ -22,11 +22,14 @@ struct EmptyState: View {
             if !recents.items.isEmpty {
                 RecentsRow(store: recents, onOpen: onOpenRecent)
                     .padding(.horizontal, 36)
-                    .padding(.bottom, 44)
+                    .padding(.bottom, 12)
                     .frame(maxWidth: .infinity, alignment: .leading)
             } else {
-                Spacer().frame(height: 50)
+                Spacer().frame(height: 18)
             }
+
+            UpdateStatusFooter()
+                .padding(.bottom, 14)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .contentShape(Rectangle())
