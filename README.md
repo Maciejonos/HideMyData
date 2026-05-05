@@ -12,12 +12,6 @@ Built with [OpenMed](https://github.com/maziyarpanahi/openmed), [MLX-Swift](http
 
 </div>
 
-> ⚠️ If macOS Gatekeeper blocks the app (it's not signed with a developer certificate), bypass it by running:
->
-> ```bash
-> xattr -rd com.apple.quarantine /Applications/HideMyData.app
-> ```
-
 ## Install
 
 Grab the latest `.dmg` from the [Releases](../../releases) page, or build from source - see [Build](#build) below.

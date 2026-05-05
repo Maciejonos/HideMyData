@@ -1,0 +1,41 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>HideMyData</title>
+        <item>
+            <title>0.2.0</title>
+            <pubDate>Tue, 05 May 2026 23:32:48 +0200</pubDate>
+            <sparkle:version>0.2.0</sparkle:version>
+            <sparkle:shortVersionString>0.2.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<h2 id="hidemydata-is-now-notarized">HideMyData is now notarized!</h2>
+<ul>
+<li>Integrate Sparkle for automatic updates.</li>
+<li><code>Check for Updates…</code> menu item in the app menu.</li>
+<li>Switched to xcodegen.</li>
+<li>Allow removing metadata from files when saving.</li>
+</ul>
+<h3 id="manual-cleanup-for-users-on-v0.1.0">⚠️ Manual cleanup for users
+on v0.1.0</h3>
+<p>Because of the notarization and because I changed the app bundle ID,
+a one-timemanual reinstall is needed.</p>
+<ul>
+<li>If you use Raycast or AppCleaner - you’re good, just uninstall
+there.</li>
+</ul>
+<p>Manually:</p>
+<ul>
+<li>Drag the app to trash</li>
+<li>The old sandbox container at
+<code>~/Library/Containers/com.maciejonos.HideMyData/</code> is left
+behind. To reclaim the disk space:</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> ~/Library/Containers/com.maciejonos.HideMyData</span></code></pre></div>
+<p>No further bundle ID changes are planned — future versions update in
+place via Sparkle.</p>
+]]></description>
+            <enclosure url="https://dl.maciejbula.dev/hidemydata/HideMyData-0.2.0.dmg" length="12174010" type="application/octet-stream" sparkle:edSignature="wjEjJA7IXZYNthBV3qC95Pioxl5S/MY7DM2st53dVKL1hzJ3e4KfdP4efs8Iv1zbqLRJR1qnck3+TwXuJp3JDQ=="/>
+        </item>
+    </channel>
+</rss>
