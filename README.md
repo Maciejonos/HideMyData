@@ -24,7 +24,7 @@ https://github.com/user-attachments/assets/353899ca-3810-4fbc-9cbf-45bdf50ec30d
 - **PDF and image input** — both formats share the same detection and redaction pipeline
 - **OCR** — Apple Vision handles scanned PDFs, images, and rescues PDFs whose embedded fonts hide text from selection
 - **AI detection** — OpenAI `privacy-filter` (MLX 8-bit) catches names, emails, phones, addresses, dates, IDs in context
-- **Manually maintained regrex** — IBAN, SSN, Personal identifiers, MAC, IPv4/v6, JWT, API keys, crypto wallets and more to come
+- **Manually maintained regex** — IBAN, SSN, Personal identifiers, MAC, IPv4/v6, JWT, API keys, crypto wallets and more to come
 - **Two redaction styles** — solid black or frosted glass blur
 - **Manual editing** — add or remove redaction rectangles by hand before saving
 - **Permanent on save** — pages are rasterized and rebuilt - the original text and glyphs are gone, not just hidden
